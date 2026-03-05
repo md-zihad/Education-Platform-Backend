@@ -13,6 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
 
+app.get("/health", (req, res) => {
+    res.json({ status: "OK" });
+});
+
+
 app.get('/', (_req, res) => {
     res.json({
         message: 'Welcome to Education Platform API',

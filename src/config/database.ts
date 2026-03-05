@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { env } from "./env.js";
+import { User } from "../modules/user/User.entity.js";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -8,7 +9,7 @@ export const AppDataSource = new DataSource({
   username: env.DB_USER,
   password: env.DB_PASS,
   database: env.DB_NAME,
-  entities: ["src/modules/**/*.entity.ts"],
-  synchronize: false,
+  entities: [User],
+  synchronize: true,
   logging: false,
 });

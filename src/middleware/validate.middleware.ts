@@ -8,29 +8,24 @@ export const validate = (schema: ZodType<any>, source: RequestPart = "body") =>
 
         try {
             const data = req[source];
-            const parsed = schema.parse(data);
 
-            req[source] = parsed;
+            const parsed = schema.safeParse(data);
+
+            if (!parsed.success) {
+                return res.status(400).json({
+                    message: "Validation failed",
+                    errors: parsed.error.issues.map((issue: ZodIssue) => ({
+                        field: issue.path.map(String).join("."),
+                        message: issue.message,
+                    })),
+                });
+            }
+
+            Object.assign(req[source], parsed.data);
 
             next();
 
         } catch (err: unknown) {
-
-            if (err instanceof ZodError) {
-
-                return res.status(400).json(
-                    {
-                        message: "Validation failed",
-                        errors: err.issues.map((issue: ZodIssue) => (
-                            {
-                                field: issue.path.map(String).join("."),
-                                message: issue.message,
-                            }
-                        ))
-                    }
-                );
-            }
-
             return res.status(500).json({ message: "Internal validation error" });
         }
     };

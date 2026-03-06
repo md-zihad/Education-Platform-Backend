@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { env } from "./env.js";
 import { User } from "../modules/user/User.entity.js";
 import { Institute } from "../modules/institutes/Institute.entity.js";
+import { Student } from "../modules/students/Student.entity.js";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -10,7 +11,7 @@ export const AppDataSource = new DataSource({
   username: env.DB_USER,
   password: env.DB_PASS,
   database: env.DB_NAME,
-  entities: [User, Institute],
+  entities: [User, Institute, Student],
   synchronize: true,
   logging: false,
 });

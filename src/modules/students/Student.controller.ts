@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import * as service from "./Institute.service.js";
+import * as service from "./Student.service.js";
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const institute = await service.createInstitute(req.body);
+        const student = await service.createStudent(req.body);
 
         return res.status(201).json({
             status: "success",
-            message: "Institute created successfully",
-            data: institute
+            message: "Student created successfully",
+            data: student
         });
     } catch (err: any) {
         return res.status(400).json({ message: err.message });
@@ -17,16 +17,13 @@ export const create = async (req: Request, res: Response) => {
 
 export const getAll = async (req: Request, res: Response) => {
     try {
-        const { page, limit } = req.query as {
-            page?: number;
-            limit?: number;
-        };
+        const { page, limit } = req.query as any;
 
-        const result = await service.getInstitutes(page, limit);
+        const result = await service.getStudents(Number(page) || 1, Number(limit) || 10);
 
         return res.json({
             status: "success",
-            message: "Institutes retrieved successfully",
+            message: "Students retrieved successfully",
             data: result.data,
             total: result.total,
             page: result.page,
@@ -40,14 +37,14 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const getById = async (req: Request, res: Response) => {
     try {
-        const institute = await service.getInstituteById(req.params.id);
+        const student = await service.getStudentById(req.params.id);
 
-        if (!institute) return res.status(404).json({ message: "Not found" });
+        if (!student) return res.status(404).json({ message: "Not found" });
 
         return res.json({
             status: "success",
-            message: "Institute retrieved successfully",
-            data: institute
+            message: "Student retrieved successfully",
+            data: student
         });
     } catch (err: any) {
         return res.status(400).json({ message: err.message });
@@ -56,11 +53,11 @@ export const getById = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
     try {
-        const updated = await service.updateInstitute(req.params.id, req.body);
+        const updated = await service.updateStudent(req.params.id, req.body);
 
         return res.json({
             status: "success",
-            message: "Institute updated successfully",
+            message: "Student updated successfully",
             data: updated
         });
     } catch (err: any) {
@@ -70,11 +67,11 @@ export const update = async (req: Request, res: Response) => {
 
 export const remove = async (req: Request, res: Response) => {
     try {
-        await service.deleteInstitute(req.params.id);
+        await service.deleteStudent(req.params.id);
 
         return res.json({
             status: "success",
-            message: "Institute deleted successfully"
+            message: "Student deleted successfully"
         });
     } catch (err: any) {
         return res.status(400).json({ message: err.message });

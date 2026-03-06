@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { Student } from "../students/Student.entity.js";
 
 @Entity("institutes")
 export class Institute {
@@ -19,6 +20,9 @@ export class Institute {
 
     @Column({ type: "boolean", default: true })
     status?: boolean;
+
+    @OneToMany(() => Student, (student) => student.institute)
+    students!: Student[];
 
     @CreateDateColumn()
     createdAt!: Date;

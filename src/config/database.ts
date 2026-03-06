@@ -3,6 +3,7 @@ import { env } from "./env.js";
 import { User } from "../modules/user/User.entity.js";
 import { Institute } from "../modules/institutes/Institute.entity.js";
 import { Student } from "../modules/students/Student.entity.js";
+import { Course } from "../modules/courses/Course.entity.js";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: env.DB_USER,
   password: env.DB_PASS,
   database: env.DB_NAME,
-  entities: [User, Institute, Student],
+  entities: [User, Institute, Student, Course],
   synchronize: true,
   logging: false,
 });

@@ -6,14 +6,14 @@ import { createResultSchema, updateResultSchema, paginationSchema } from "./Resu
 
 const router = Router();
 
-router.post("/create", validate(createResultSchema), createResult);
+router.post("/create", protect, validate(createResultSchema), createResult);
 
-router.get("/", validate(paginationSchema, "query"), getResults);
+router.get("/", protect, validate(paginationSchema, "query"), getResults);
 
-router.get("/:id", getResultById);
+router.get("/:id", protect, getResultById);
 
-router.put("/:id", validate(updateResultSchema), updateResult);
+router.put("/:id", protect, validate(updateResultSchema), updateResult);
 
-router.delete("/:id", deleteResult);
+router.delete("/:id", protect, deleteResult);
 
 export default router;

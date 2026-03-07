@@ -1,7 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, Index } from "typeorm";
 import { Student } from "../students/Student.entity.js";
 
 @Entity("institutes")
+@Index("idx_institute_name", ["name"])
+@Index("idx_institute_city", ["city"])
+@Index("idx_institute_established_year", ["establishedYear"])
+@Index("idx_institute_created", ["createdAt"])
 export class Institute {
     @PrimaryGeneratedColumn("uuid")
     id!: string;

@@ -1,6 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index } from "typeorm";
 
 @Entity("courses")
+@Index("idx_course_code", ["code"])
+@Index("idx_course_name", ["name"])
+@Index("idx_course_created", ["createdAt"])
+
 export class Course {
 
     @PrimaryGeneratedColumn("uuid")

@@ -1,10 +1,17 @@
-import { Entity, Unique, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from "typeorm";
+import { Entity, Unique, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, Index } from "typeorm";
 
 import { Student } from "../students/Student.entity.js";
 import { Course } from "../courses/Course.entity.js";
 
 @Entity("results")
+@Index("idx_result_student", ["student"])
+@Index("idx_result_course", ["course"])
+@Index("idx_result_year", ["academicYear"])
+@Index("idx_result_student_year", ["student", "academicYear"])
+@Index("idx_result_course_year", ["course", "academicYear"])
+@Index("idx_result_created", ["createdAt"])
 @Unique(["student", "course", "academicYear"])
+
 export class Result {
 
     @PrimaryGeneratedColumn("uuid")

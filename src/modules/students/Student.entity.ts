@@ -7,11 +7,16 @@ import {
     OneToMany,
     CreateDateColumn,
     UpdateDateColumn,
+    Index
 } from "typeorm";
 import { Institute } from "../institutes/Institute.entity.js";
 
 
 @Entity("students")
+@Index("idx_student_email", ["email"])
+@Index("idx_student_institute", ["institute"])
+@Index("idx_student_enrollment_year", ["enrollmentYear"])
+@Index("idx_student_created", ["createdAt"])
 export class Student {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
